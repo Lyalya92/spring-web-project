@@ -1,10 +1,12 @@
 package market_autumn.services;
 
 import market_autumn.data.Product;
+import market_autumn.exceptions.ExistEntityException;
 import market_autumn.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -22,8 +24,8 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public Product findById(Long id) {
-        return productRepository.findById(id).orElseThrow();
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
     }
 
     public List<Product> findAllByAmountNotNull() {
@@ -50,5 +52,14 @@ public class ProductService {
             productRepository.save(product);
         }
     }
+
+    public void addProduct(Product product){
+        if (productRepository.existsProductByTitle(product.getTitle())) {
+            throw new ExistEntityException("This product already exists");
+        } else {
+            productRepository.save(product);
+        }
+    }
+
 
 }

@@ -40,6 +40,21 @@
         </tr>
         </tbody>
     </table>
+
+    <p></p>
+    <h4>Добавить продукт</h4>
+    <form novalidate ng-submit="addProductJson()">
+        <input class="form-control" type="number" placeholder="ID продукта" ng-model="newProductJson.id">
+        <p></p>
+        <input class="form-control" type="text" placeholder="Название продукта" ng-model="newProductJson.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Цена" ng-model="newProductJson.price">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Количество" ng-model="newProductJson.amount">
+        <p></p>
+        <button type="submit" class="btn btn-primary" > Сохранить продукт </button>
+    </form>
+
 </div>
 </body>
 </html>

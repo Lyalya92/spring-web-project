@@ -21,4 +21,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.price <= :maxPrice")
     List<Product> findAllByPriceLessThan(Integer maxPrice);
 
+    boolean existsProductByTitle(String title);
 }

@@ -28,5 +28,13 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     }
 
+    $scope.addProductJson = function (){
+        console.log($scope.newProductJson);
+        $http.post(contextPath + '/products', $scope.newProductJson)
+            .then(function (response) {
+            $scope.loadProducts();
+        });
+    }
+
     $scope.loadProducts();
 });

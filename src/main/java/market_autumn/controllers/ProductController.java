@@ -1,13 +1,15 @@
 package market_autumn.controllers;
 
 import market_autumn.data.Product;
+import market_autumn.exceptions.AppError;
+import market_autumn.exceptions.ResourceNotFoundException;
 import market_autumn.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -22,9 +24,15 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PostMapping("/products")
+    public void addProduct(@RequestBody Product product) {
+        productService.addProduct(product);
+    }
+
     @GetMapping("/products/find/{id}")
     public Product findById(@PathVariable Long id) {
-        return productService.findById(id);
+        return productService.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " isn't found"));
     }
 
     @GetMapping("/products/change_amount")
